@@ -1,3 +1,4 @@
+const { clearCache } = require("ejs");
 const express = require("express");
 const router = express.Router();
 const schedule = require("node-schedule");
@@ -69,7 +70,7 @@ schedule.scheduleJob("*/15 * * * *", async () => {
                         break;
                     } else if (titleArr[j] == newPostTitle) {
                         hasUpdate = true;
-                        console.log("post has an update");
+                        console.log(`post has an update: ${newPostTitle}`);
                         updatedArticlePtr = titleArr[j];
                         break;
                     }
@@ -83,9 +84,9 @@ schedule.scheduleJob("*/15 * * * *", async () => {
                     // console.log("POST WAS SAVED");
                 }
                 else if (hasUpdate === true ){
-                    Article.remove({title: updatedArticlePtr})
+                    Article.deleteMany({title: updatedArticlePtr}) // Deletes old versions of article
                         .then(result => {
-                            post.save();
+                            post.save(); // Saves new versions of article
                             console.log("Updated Post");
                         });
                 }           
@@ -93,6 +94,9 @@ schedule.scheduleJob("*/15 * * * *", async () => {
     }
     console.log("Finished schedule");
 });
+
+
+
 
 router.get("/", async (req, res) => {
     console.log("ran");
@@ -109,6 +113,20 @@ router.get("/json", async (req, res) => {
     jsonData = await requestsController.requestFromUrl(apiURL);
     res.json(jsonData);
 });
+
+router.get("/runtest", async (req, res) => {
+    let sampleTitle = "No regrets over handling of Vladimir Putin, says Angela Merkel";
+
+    const articleExists = await Article.exists({title: sampleTitle})
+
+    if (articleExists) {
+        console.log("Exists");
+    } else {
+        console.log("Does Not Exist");
+    }
+
+    res.send("lol");
+})
 
 
 
