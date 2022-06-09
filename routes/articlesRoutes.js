@@ -9,8 +9,8 @@ const apiURL = 'https://www.theguardian.com/international/rss';
 
 
 // Makes requests and updates database every 15 minutes
-schedule.scheduleJob("*/10 * * * * *", async () => {
-    // console.log("ran");
+schedule.scheduleJob("*/15 * * * *", async () => {
+    console.log("ran");
 
     dbData = await requestsController.requestFromUrl(apiURL)
 
@@ -38,10 +38,10 @@ schedule.scheduleJob("*/10 * * * * *", async () => {
         let dateArr = [];
         let updatedArticlePtr;
 
-        console.log("*********");
-        console.log(`iteration i=${i}`);
-        console.log(`Title: ${newPostTitle}`);
-        console.log("one");
+        // console.log("*********");
+        // console.log(`iteration i=${i}`);
+        // console.log(`Title: ${newPostTitle}`);
+        // console.log("one");
 
  
         // // TODO: This works so we must refactor the code in this style
@@ -60,66 +60,66 @@ schedule.scheduleJob("*/10 * * * * *", async () => {
             // console.log(`Title: ${newPostTitle}`);
             // console.log("start two");
             if(err) console.log(err);
-                        
-            // Iterates through every item in the db collection and adds the itemID of every item into an array
-            articlesInCollection.map(singleArticle => {
-                // itemIdArr.push(singlePost.itemID); 
-                titleArr.push(singleArticle.title);  
-                dateArr.push(singleArticle.pubDate);                
-            })
+        }).clone()
+            .then(result => {
+            
+                // Iterates through every item in the db collection and adds the itemID of every item into an array
+                result.map(singleArticle => {
+                    // itemIdArr.push(singlePost.itemID); 
+                    titleArr.push(singleArticle.title);  
+                    dateArr.push(singleArticle.pubDate);                
+                })
+
+                let isDuplicates = false;
+                let hasUpdate = false;
+
+                // Compares the itemID of the new item with the itemID of all the existing items in the db
+                // If a duplicate is found, "isDuplicates" is set to "true" 
+
+                for (j=0; j<titleArr.length; j++) {  
+                    // console.log(`looking at ${titleArr[j]} AND ${newPostTitle}`);
+                    
+                    if (titleArr[j] == newPostTitle && dateArr[j] == newPostDate) {
+                        isDuplicates = true;
+                        // console.log(`${titleArr[j]} == ${newPostTitle}`);
+                        console.log("found duplicate");
+                        break;
+                    } else if (titleArr[j] == newPostTitle) {
+                        hasUpdate = true;
+                        console.log("post has an update");
+                        updatedArticlePtr = titleArr[j];
+                        break;
+                    }
+                    else {
+                        // console.log("didn't trigger");
+                        // console.log("**************");
+                        // console.log(`${titleArr[j]} != ${newPostTitle}`);
+
+                        // console.log(`isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
+
+                    }
+                }
+
+                // if (isDuplicates == false) { console.log("not a dup");}
 
 
-            let isDuplicates = false;
-            let hasUpdate = false;
-
-            // Compares the itemID of the new item with the itemID of all the existing items in the db
-            // If a duplicate is found, "isDuplicates" is set to "true" 
-
-            for (j=0; j<titleArr.length; j++) {  
-                // console.log(`looking at ${titleArr[j]} AND ${newPostTitle}`);
-                
-                if (titleArr[j] == newPostTitle && dateArr[j] == newPostDate) {
-                    isDuplicates = true;
-                    // console.log(`${titleArr[j]} == ${newPostTitle}`);
-                    // console.log("found duplicate");
-                    break;
-                } else if (titleArr[j] == newPostTitle) {
-                    hasUpdate = true;
-                    console.log("post has an update");
-                    updatedArticlePtr = titleArr[j];
-                    break;
+                // Ensures a post will be saved only if it is not a duplicate
+                if (isDuplicates === false && hasUpdate === false) {
+                    post.save(); // uploads the post to the database
+                    // console.log("POST WAS SAVED");
+                }
+                else if (hasUpdate === true ){
+                    Article.remove({title: updatedArticlePtr})
+                        .then(result => {
+                            post.save();
+                            console.log("Updated Post");
+                        });
                 }
                 else {
-                    // console.log("didn't trigger");
-                    // console.log("**************");
-                    // console.log(`${titleArr[j]} != ${newPostTitle}`);
-
-                    // console.log(`isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
-
+                    // console.log(`Didn't trigger because isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
                 }
-            }
-
-            // if (isDuplicates == false) { console.log("not a dup");}
-
-
-            // Ensures a post will be saved only if it is not a duplicate
-            if (isDuplicates === false && hasUpdate === false) {
-                // post.save(); // uploads the post to the database
-                // console.log("POST WAS SAVED");
-            }
-            else if (hasUpdate === true ){
-                Article.remove({title: updatedArticlePtr})
-                    .then(result => {
-                        // post.save();
-                        console.log("Updated Post");
-                    });
-            }
-            else {
-                // console.log(`Didn't trigger because isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
-            }
-           
-            console.log("fin two");
-        }).clone();
+                
+            });
     }
 });
 
