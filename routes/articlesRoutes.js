@@ -38,23 +38,6 @@ schedule.scheduleJob("*/15 * * * *", async () => {
         let dateArr = [];
         let updatedArticlePtr;
 
-        // console.log("*********");
-        // console.log(`iteration i=${i}`);
-        // console.log(`Title: ${newPostTitle}`);
-        // console.log("one");
-
- 
-        // // TODO: This works so we must refactor the code in this style
-        // const mongoDbQuery = await Article.find({}, (err, articlesInCollection) => {
-        //     if (err) console.log(err);
-        // }).clone().exec()
-        //     .then(result => {
-        //         console.log(result);
-        //         console.log("two");
-        //     });
-
-        // console.log(mongoDbQuery[0].title);
-
 
         const dbMongo = await Article.find({}, (err, articlesInCollection) => {
             // console.log(`Title: ${newPostTitle}`);
@@ -90,17 +73,8 @@ schedule.scheduleJob("*/15 * * * *", async () => {
                         updatedArticlePtr = titleArr[j];
                         break;
                     }
-                    else {
-                        // console.log("didn't trigger");
-                        // console.log("**************");
-                        // console.log(`${titleArr[j]} != ${newPostTitle}`);
-
-                        // console.log(`isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
-
-                    }
                 }
 
-                // if (isDuplicates == false) { console.log("not a dup");}
 
 
                 // Ensures a post will be saved only if it is not a duplicate
@@ -114,13 +88,10 @@ schedule.scheduleJob("*/15 * * * *", async () => {
                             post.save();
                             console.log("Updated Post");
                         });
-                }
-                else {
-                    // console.log(`Didn't trigger because isDuplicates: ${isDuplicates}, hasUpdate: ${hasUpdate}`);
-                }
-                
+                }           
             });
     }
+    console.log("Finished schedule");
 });
 
 router.get("/", async (req, res) => {
@@ -132,13 +103,13 @@ router.get("/", async (req, res) => {
         .catch(err => {
             console.log(err);
         })
-
-})
+});
 
 router.get("/json", async (req, res) => {
     jsonData = await requestsController.requestFromUrl(apiURL);
     res.json(jsonData);
 });
+
 
 
 module.exports = router;

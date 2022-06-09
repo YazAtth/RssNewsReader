@@ -38,7 +38,7 @@ mongoose.connect(process.env.DB_CONNECTION, () => {
 })
 
 app.listen(PORT, "localhost", () => {
-    console.log(`Server hosted at --> http://localhost:${PORT}`);
+    console.log(`Server active at --> http://localhost:${PORT}`);
 });
 
 
