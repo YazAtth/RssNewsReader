@@ -1,2 +1,16 @@
-<h1>Articles</h1>
+<!-- <h1>Articles</h1> -->
+
+<!-- Ensures the "last updated" text doesn't show until we have a value for it -->
+<% if (lastUpdated !== 'undefined:undefined') {  %>
+    <p>Last updated: <%= lastUpdated %></p>
+    <hr class="solidLine">
+<% } %>
+
+<% article.forEach(eachArticle => { %>
+    <h3 class="title"> <%=eachArticle.title %></h3>
+    <p class="pubDate"> - <%= eachArticle.pubDate %> -</p>
+    <%- eachArticle.description %>
+
+    <hr class="solidLine">
+<% }) %>
 

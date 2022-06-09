@@ -6,3 +6,91 @@ body {
     padding: 0 20px;
     font-family: 'Noto Serif', serif;
 }
+
+a {
+    color: rgb(8, 108, 8);
+}
+
+a:hover {
+    color: rgb(1, 44, 1);
+}
+
+
+a.topTitle {
+    color: gray;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+h3 {
+    font-size: 30px;
+}
+
+hr.solidLine {
+    border-top: 3px dotted #bbb;
+}
+
+p.pubDate {
+    color: gray;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    /* padding: 0px 0px; */
+}
+
+
+
+/* TITLES PAGE */
+
+li.titlePageText {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+a.titlePageText {
+    color: black;
+    text-decoration: none;
+}
+
+a.titlePageText:hover {
+    text-decoration: underline;
+    color: rgb(1, 44, 1);
+}
+
+/* Makes the bullet points bold */
+ol > li::marker { 
+    font-weight: bold;
+}
+
+
+
+/* NAV BAR */
+
+nav {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+}
+
+nav ul{
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+}
+
+nav li{
+list-style-type: none;
+margin-left: 20px;
+}
+
+nav h1{
+font-size: 3em;
+}
+
+nav p, nav a{
+color: #777;
+font-weight: 300;
+}

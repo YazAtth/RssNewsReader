@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/YazAtth/RssNewsReader#readme",
   "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-ejs-layouts": "^2.5.1",
-    "nodemon": "^2.0.16"
+    "mongoose": "^6.3.5",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.16",
+    "xml2js": "^0.4.23"
   }
 }
