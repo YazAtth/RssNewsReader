@@ -6,6 +6,7 @@ const fs = require("fs");
 const { exit } = require("process");  // Temporary for debugging
 
 
+const filtersController = require("../controllers/filtersController");
 const requestsController = require("../controllers/requestsController");
 const Article = require("../models/Article"); // Import schema for each Article for the db
 
@@ -41,7 +42,8 @@ schedule.scheduleJob("*/30 * * * * *", async () => {
 router.get("/", async (req, res) => {
 
     //TODO Sort/filter has to be done around here
-    Article.find().sort({pubDate: -1})
+    Article.find(filtersController.applyUserFilters())
+        .sort(filtersController.applyUserSort())
         .then(result => {
             res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated});
         })
