@@ -1,0 +1,2 @@
+1. Should we code in the ability to pull from any news source or hard code a few sources?
+2. Maybe have the source name in the newsSourceList.json file

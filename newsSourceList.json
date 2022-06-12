@@ -1,0 +1,7 @@
+{
+    "urls": [
+        "https://www.theguardian.com/international/rss", 
+        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", 
+        "http://feeds.bbci.co.uk/news/england/london/rss.xml"
+    ]
+}
