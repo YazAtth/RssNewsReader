@@ -27,7 +27,8 @@ const saveRssToDatabase = async (url) => {
 
     dbData = await requestFromUrl(url) // Returns data from the News Sources formatted as a JSON object
 
-    let sourceTitle = dbData[0].title[0];  // Gets the title of the news source
+    // let sourceTitle = dbData[0].title[0];  // Gets the title of the news source
+    let sourceTitle = returnNewsSourceTitle(dbData[0].title[0]);  // Gets the title of the news source
     let dbDataBody = dbData[0].item;  // Removes all but the array of news articles
 
     for (let i=0; i<dbDataBody.length; i++) {
@@ -43,8 +44,8 @@ const saveRssToDatabase = async (url) => {
         newPostDate = dbDataBody[i].pubDate[0];
         
 
-        const sameArticleTitleExists = await Article.exists({title: newPostTitle}); // Checks to see if an article exists in the db with the same title
-        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}); // Checks to see if an article exists in the db with the same pubDate
+        const sameArticleTitleExists = await Article.exists({title: newPostTitle}, {sourceTitle: sourceTitle}); // Checks to see if an article exists in the db with the same title within the same source
+        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}, {sourceTitle, sourceTitle}); // Checks to see if an article exists in the db with the same pubDate within the same source
 
         if (sameArticleTitleExists && sameArticleDateExists) { // If an article already exists in the db with the same title and date: marked as duplicated
             // console.log("Duplicate Found");
@@ -72,6 +73,20 @@ const saveRssToDatabasePromise = async (url) => {
             reject("Unable")
         }
     })
+}
+
+const returnNewsSourceTitle = rssSourceTitle => {
+    
+    switch (rssSourceTitle) {
+        case "NYT > Top Stories":
+            return "New York Times";
+
+        case "The Guardian":
+            return "The Guardian";
+
+        default:
+            console.log(`Unknown News Source Entered: ${rssSourceTitle}`);
+    }
 }
     
 

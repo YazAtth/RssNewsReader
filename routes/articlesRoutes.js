@@ -53,7 +53,7 @@ schedule.scheduleJob("*/20 * * * * *", async () => {
     //     }
     // }
     // requestsController.saveRssToDatabase(apiURL);
-    apiReq = await requestsController.saveRssToDatabasePromise(apiURL2);
+    apiReq = await requestsController.saveRssToDatabasePromise(apiURL);
 
     console.log("Finished schedule");
 });
