@@ -7,15 +7,14 @@ const { exit } = require("process");  // Temporary for debugging
 const requestsController = require("../controllers/requestsController");
 const Article = require("../models/Article");
 
-const apiURL = 'https://www.theguardian.com/international/rss';
-const apiURL2 = 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml';
+let apiUrlList = ['https://www.theguardian.com/international/rss', 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml', 'http://feeds.bbci.co.uk/news/england/london/rss.xml'];
 
-let apiUrlList = ['https://www.theguardian.com/international/rss', 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'];
+lastUpdated = undefined;
 
 
 // Makes requests and updates database every 15 minutes
-// schedule.scheduleJob("*/15 * * * *", async () => {
-schedule.scheduleJob("*/30 * * * * *", async () => {
+schedule.scheduleJob("*/15 * * * *", async () => {
+// schedule.scheduleJob("*/30 * * * * *", async () => {
     console.log("Started schedule");
 
     promiseList = [];
@@ -24,6 +23,7 @@ schedule.scheduleJob("*/30 * * * * *", async () => {
         promiseList.push(requestsController.saveRssToDatabasePromise(apiUrlList[i]));
     }
 
+    lastUpdated = Date.now();
     Promise.allSettled(promiseList);
 
 });
@@ -32,9 +32,11 @@ schedule.scheduleJob("*/30 * * * * *", async () => {
 
 router.get("/", async (req, res) => {
     console.log("ran");
-    Article.find()
+
+    //TODO Sort/filter has to be done around here
+    Article.find().sort({pubDate: -1})
         .then(result => {
-            res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: "NaN"});
+            res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated});
         })
         .catch(err => {
             console.log(err);

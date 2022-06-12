@@ -16,7 +16,7 @@ const requestFromUrl = url => {
 
                 resolve(result.rss.channel);
             })
-        })
+        });
     })
 }
 
@@ -81,11 +81,8 @@ const returnNewsSourceTitle = rssSourceTitle => {
         case "NYT > Top Stories":
             return "New York Times";
 
-        case "The Guardian":
-            return "The Guardian";
-
         default:
-            console.log(`Unknown News Source Entered: ${rssSourceTitle}`);
+            return rssSourceTitle;
     }
 }
     

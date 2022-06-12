@@ -1,15 +1,69 @@
-<!-- <h1>Articles</h1> -->
+
+
+<% 
+const convertMillisecondsToDisplayTime = milliseconds => {
+
+    in_years = Math.floor(milliseconds/(3.15*10**10))
+    in_months = Math.floor(milliseconds/(2.628*10**9))
+    in_days =  Math.floor((milliseconds)/(8.64*10**7))
+    in_hours = Math.floor((milliseconds)/(3.6*10**6))
+    in_minutes = Math.floor(milliseconds/60000)
+    in_seconds = Math.floor(milliseconds/1000)
+
+    if (in_years == 1) {
+        return "1 year";
+    }
+    else if (in_years > 0) {
+        return in_years + " years"
+    }
+
+    if (in_months == 1) {
+        return "1 month";
+    }
+    else if (in_months) {
+        return in_months + " months";
+    }
+
+    if (in_days == 1) {
+        return "1 day";
+    }
+    else if (in_days > 0) {
+        return in_days + " days";
+    }
+
+    if (in_hours == 1) {
+        return "1 hour";
+    }
+    else if (in_hours > 0) {
+        return in_hours + " hours";
+    }
+
+    if (in_minutes == 1) {
+        return "1 minute";
+    }
+    else if (in_minutes > 0) {
+        return in_minutes + " minutes";
+    }
+
+    if (in_seconds == 1) {
+        return "1 second";
+    }
+
+    return in_seconds + " seconds";
+} %> 
 
 <!-- Ensures the "last updated" text doesn't show until we have a value for it -->
-<% if (lastUpdated !== 'undefined:undefined') {  %>
-    <p>Last updated: <%= lastUpdated %></p>
+<% if (lastUpdated !== undefined) {  %>
+    <p class="lastUpdated">- Last updated <%= convertMillisecondsToDisplayTime(Date.now() - lastUpdated) %> ago -</p>
     <hr class="solidLine">
 <% } %>
 
 <% article.forEach(eachArticle => { %>
-    <h3 class="title"> <%=eachArticle.title %></h3>
-    <p class="pubDate"> - <%= eachArticle.pubDate %> -</p>
-    <%- eachArticle.description %>
+    <h3 class="title"><a href=<%=eachArticle.link%> class="title"><%=eachArticle.title %></a></h3>
+    <p class="sourceTitle">- <%=eachArticle.sourceTitle %> -</p>
+    <p class="pubDate"> <span><%- convertMillisecondsToDisplayTime(Date.now() - eachArticle.pubDate) + " ago"%>  <br> <span class="extra"><%=eachArticle.pubDate%></span></span></p>
+
+    <div class="description"><%- eachArticle.description %></div>
 
     <hr class="solidLine">
 <% }) %>

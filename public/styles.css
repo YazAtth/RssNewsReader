@@ -22,22 +22,66 @@ a.topTitle {
     font-size: 20px;
 }
 
+p.lastUpdated {
+    color: gray;
+    /* font-size: 15px; */
+    margin-top: -40px;
+    margin-bottom: 30px;
+}
+
 
 h3 {
     font-size: 30px;
+}
+
+a.title {
+    color: black;
+    text-decoration: none;
+}
+
+a.title:hover {
+    color:rgb(1, 44, 1);
+    text-decoration: underline;
 }
 
 hr.solidLine {
     border-top: 3px dotted #bbb;
 }
 
+
+
 p.pubDate {
     color: gray;
-    margin-top: -20px;
+    margin-top: -30px;
     margin-bottom: 30px;
+    font-style: italic;
     /* padding: 0px 0px; */
 }
 
+.extra {
+    display: none;
+}
+
+p.pubDate span:hover .extra {
+    display:inline-block;
+    /* font-weight: bold; */
+    color: rgb(176, 176, 176);
+}
+
+
+
+p.sourceTitle {
+    color: gray;
+    margin-top: -30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+div.description {
+    margin-bottom: 30px;
+}
 
 
 /* TITLES PAGE */
