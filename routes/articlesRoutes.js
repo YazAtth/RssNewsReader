@@ -10,23 +10,30 @@ const apiURL = 'https://www.theguardian.com/international/rss';
 
 
 // Makes requests and updates database every 15 minutes
-schedule.scheduleJob("*/15 * * * *", async () => {
+// schedule.scheduleJob("*/15 * * * *", async () => {
+schedule.scheduleJob("*/200 * * * * *", async () => {
+
 
     dbData = await requestsController.requestFromUrl(apiURL) // Returns data from the News Sources formatted as a JSON object
 
-    for (let i=0; i<dbData.length; i++) {
+    let sourceTitle = dbData[0].title[0];  // Gets the title of the news source
+    let dbDataBody = dbData[0].item;  // Removes all but the array of news articles
+
+    for (let i=0; i<dbDataBody.length; i++) {
         const post = new Article({
-            title: dbData[i].title[0],
-            description: dbData[i].description[0],
-            link: dbData[i].link[0],
-            pubDate: dbData[i].pubDate[0],
+            sourceTitle: sourceTitle,
+            title: dbDataBody[i].title[0],
+            description: dbDataBody[i].description[0],
+            link: dbDataBody[i].link[0],
+            pubDate: dbDataBody[i].pubDate[0],
         });
     
-        newPostTitle = dbData[i].title[0];
-        newPostDate = dbData[i].pubDate[0];
+        newPostTitle = dbDataBody[i].title[0];
+        newPostDate = dbDataBody[i].pubDate[0];
+        
 
         const sameArticleTitleExists = await Article.exists({title: newPostTitle}); // Checks to see if an article exists in the db with the same title
-        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}); // Checks to see if an article exists in the dv with the same pubDate
+        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}); // Checks to see if an article exists in the db with the same pubDate
 
         if (sameArticleTitleExists && sameArticleDateExists) { // If an article already exists in the db with the same title and date: marked as duplicated
             // console.log("Duplicate Found");
@@ -65,7 +72,14 @@ router.get("/json", async (req, res) => {
 });
 
 router.get("/runtest", async (req, res) => {
-    const request = await requestsController.requestFromUrl("https://www.theguardian.com/international/rss")
+    const request = await requestsController.requestFromUrl("http://feeds.bbci.co.uk/news/england/london/rss.xml")
+
+    let title = request[0].title[0];
+    let requestBody = request[0].item;
+    
+    console.log(title);
+    console.log(requestBody);
+
 
     res.send("lol");
 })
