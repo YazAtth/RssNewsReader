@@ -9,14 +9,16 @@ const ArticleSchema = mongoose.Schema({
     link: String,
     description: String,
     pubDate: {
-        type: String,
+        type: Date,
         required: true
     },
     "dc:creator": String,
     itemID: String,
-    dbUploadDate: {type: Date, default: Date.now}
-
+    dbUploadDate: {type: Date, default: Date.now},
 });
+
+
+
 
 // The first argument is the Collection Name
 const Item = mongoose.model("dbpracticecollections", ArticleSchema);
