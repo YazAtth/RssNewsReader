@@ -51,14 +51,14 @@ const saveRssToDatabase = async (url) => {
             // console.log("Duplicate Found");
         }
         else if (sameArticleTitleExists && !sameArticleDateExists) { // An an article exists in the db with the same title but different date: marked as an update for the article
-            console.log(`Article with Update Found: ${newPostTitle}`);
+            console.log(`Article with Update Found: [${sourceTitle}] ${newPostTitle}`);
             Article.deleteMany({title: newPostTitle}) // Deletes old versions of article
                         .then(result => {
                             post.save(); // Saves new versions of article
                         });
         }
         else { // Otherwise marked as a new article
-            console.log(`New Article Found: ${newPostTitle}`);
+            console.log(`New Article Found: [${sourceTitle}] ${newPostTitle}`);
             post.save();
         }
     }
