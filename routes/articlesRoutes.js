@@ -22,8 +22,10 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 
 
 // Makes requests and updates database every 15 minutes
-schedule.scheduleJob("*/1 * * * *", async () => {
+// schedule.scheduleJob("*/1 * * * *", async () => {
 // schedule.scheduleJob("*/30 * * * * *", async () => {
+ schedule.scheduleJob(requestsController.crontimeParser(), async () => {
+
     console.log("\nStarted schedule");
 
     promiseList = [];

@@ -78,16 +78,6 @@ const saveRssToDatabasePromise = async (url) => {
     })
 }
 
-const returnNewsSourceTitle = rssSourceTitle => {
-    
-    switch (rssSourceTitle) {
-        case "NYT > Top Stories":
-            return "New York Times";
-
-        default:
-            return rssSourceTitle;
-    }
-}
 
 const returnNewsSourceTitleFromUrl = inputUrl => {
     clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
@@ -104,6 +94,17 @@ const returnNewsSourceTitleFromUrl = inputUrl => {
     return sourceTitle;
 
 }
+
+const crontimeParser = () => {  // Gets the refresh rate from the json file an outputs it in a way the crontab scheduler understands (eg. 15mins = */15 * * * *)
+    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+    timeDurationInMinutes = clientPreferences.refreshRateInMinutes;
+
+    let timeDurationInSeconds = Math.round(timeDurationInMinutes * 60);
+
+    console.log(`*/${timeDurationInSeconds} * * * * *`);
+
+    return `*/${timeDurationInSeconds} * * * * *`;
+}
     
 
 
@@ -111,5 +112,6 @@ module.exports = {
     requestFromUrl, 
     adder,
     saveRssToDatabase,
-    saveRssToDatabasePromise
+    saveRssToDatabasePromise,
+    crontimeParser
 }
