@@ -1,2 +1,3 @@
 1. Should we code in the ability to pull from any news source or hard code a few sources?
 2. Maybe have the source name in the newsSourceList.json file
+3. How long should we keep the articles for (as too much articles will take up space)

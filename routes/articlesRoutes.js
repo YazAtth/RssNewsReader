@@ -11,8 +11,8 @@ const requestsController = require("../controllers/requestsController");
 const Article = require("../models/Article"); // Import schema for each Article for the db
 
 // Takes the URLs from the JSON file and turns them into an array
-newsFeedSources = JSON.parse(fs.readFileSync("newsSourceList.json"));
-jsonRssSourceList = newsFeedSources.rssSources;
+clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+jsonRssSourceList = clientPreferences.rssSources;
 apiUrlList = [];
 for (let i=0; i<jsonRssSourceList.length; i++) {
     apiUrlList.push(jsonRssSourceList[i].url);
@@ -60,8 +60,8 @@ router.get("/json", async (req, res) => {
 });
 
 router.get("/runtest", async (req, res) => {
-    newsFeedSources = JSON.parse(fs.readFileSync("newsSourceList.json"));
-    urlList = newsFeedSources.urls;
+    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+    urlList = clientPreferences.urls;
 
     urlArray = [];
 

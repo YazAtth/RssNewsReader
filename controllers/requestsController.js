@@ -90,8 +90,8 @@ const returnNewsSourceTitle = rssSourceTitle => {
 }
 
 const returnNewsSourceTitleFromUrl = inputUrl => {
-    newsFeedSources = JSON.parse(fs.readFileSync("newsSourceList.json"));
-    jsonRssSourceList = newsFeedSources.rssSources; // Returns an array of all the Rss sources
+    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+    jsonRssSourceList = clientPreferences.rssSources; // Returns an array of all the Rss sources
 
     let sourceTitle = "Unknown Source"
 
