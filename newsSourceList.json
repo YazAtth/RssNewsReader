@@ -1,7 +1,25 @@
 {
-    "urls": [
-        "https://www.theguardian.com/international/rss", 
-        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", 
-        "http://feeds.bbci.co.uk/news/england/london/rss.xml"
-    ]
+    "rssSources": [
+        {
+            "url": "https://www.theguardian.com/international/rss",
+            "title": "The Guardian"
+        }, 
+        {
+            "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+            "title": "The New York Times"
+        }, 
+        {
+            "url": "http://feeds.bbci.co.uk/news/england/london/rss.xml",
+            "title": "BBC"
+        }
+    ],
+
+    "filterPreferences": 
+    {
+        "showInFeed": [
+            "The Guardian",
+            "The New York Times",
+            "BBC"
+        ]
+    }
 }

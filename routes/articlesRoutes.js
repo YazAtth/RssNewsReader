@@ -12,19 +12,19 @@ const Article = require("../models/Article"); // Import schema for each Article 
 
 // Takes the URLs from the JSON file and turns them into an array
 newsFeedSources = JSON.parse(fs.readFileSync("newsSourceList.json"));
-jsonUrlList = newsFeedSources.urls;
+jsonRssSourceList = newsFeedSources.rssSources;
 apiUrlList = [];
-for (let i=0; i<jsonUrlList.length; i++) {
-    apiUrlList.push(jsonUrlList[i]);
+for (let i=0; i<jsonRssSourceList.length; i++) {
+    apiUrlList.push(jsonRssSourceList[i].url);
 }
 
 lastUpdated = undefined;  // Displayed to the user to show when the news feed was last updated (eg. 14 minutes ago)
 
 
 // Makes requests and updates database every 15 minutes
-// schedule.scheduleJob("*/15 * * * *", async () => {
-schedule.scheduleJob("*/30 * * * * *", async () => {
-    console.log("Started schedule");
+schedule.scheduleJob("*/1 * * * *", async () => {
+// schedule.scheduleJob("*/30 * * * * *", async () => {
+    console.log("\nStarted schedule");
 
     promiseList = [];
 

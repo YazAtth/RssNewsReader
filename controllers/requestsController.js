@@ -1,5 +1,7 @@
 const axios = require("axios");
 const xml2js = require('xml2js');
+const fs = require("fs");
+
 
 const Article = require("../models/Article");
 
@@ -28,7 +30,8 @@ const saveRssToDatabase = async (url) => {
     dbData = await requestFromUrl(url) // Returns data from the News Sources formatted as a JSON object
 
     // let sourceTitle = dbData[0].title[0];  // Gets the title of the news source
-    let sourceTitle = returnNewsSourceTitle(dbData[0].title[0]);  // Gets the title of the news source
+    // let sourceTitle = returnNewsSourceTitle(dbData[0].title[0]);  // Gets the title of the news source
+    let sourceTitle = returnNewsSourceTitleFromUrl(url);
     let dbDataBody = dbData[0].item;  // Removes all but the array of news articles
 
     for (let i=0; i<dbDataBody.length; i++) {
@@ -84,6 +87,22 @@ const returnNewsSourceTitle = rssSourceTitle => {
         default:
             return rssSourceTitle;
     }
+}
+
+const returnNewsSourceTitleFromUrl = inputUrl => {
+    newsFeedSources = JSON.parse(fs.readFileSync("newsSourceList.json"));
+    jsonRssSourceList = newsFeedSources.rssSources; // Returns an array of all the Rss sources
+
+    let sourceTitle = "Unknown Source"
+
+    jsonRssSourceList.filter(rssSource => {
+        if (rssSource.url === inputUrl ) {
+            sourceTitle = rssSource.title;
+        }
+    });
+
+    return sourceTitle;
+
 }
     
 
