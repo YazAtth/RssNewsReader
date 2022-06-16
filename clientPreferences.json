@@ -1,5 +1,5 @@
 {
-    "refreshRateInMinutes": 1,
+    "refreshRateInMinutes": 15,
 
     "rssSources": [
         {
@@ -26,7 +26,13 @@
             "The New York Times",
             "BBC",
             "Sky News"
-        ]
+        ],
+
+        "requiredKeywords": {
+            "requireAtLeastOneItem": [],
+            "requireAllItems": ["russia","american"],
+            "excludedItems":[]
+        }
     },
 
     "sortPreferences":

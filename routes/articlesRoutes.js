@@ -22,9 +22,9 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 
 
 // Makes requests and updates database every 15 minutes
-// schedule.scheduleJob("*/1 * * * *", async () => {
+schedule.scheduleJob("*/15 * * * *", async () => {
 // schedule.scheduleJob("*/30 * * * * *", async () => {
- schedule.scheduleJob(requestsController.crontimeParser(), async () => {
+//  schedule.scheduleJob(requestsController.crontimeParser(), async () => {
 
     console.log("\nStarted schedule");
 
@@ -63,17 +63,18 @@ router.get("/json", async (req, res) => {
 
 router.get("/runtest", async (req, res) => {
     clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
-    urlList = clientPreferences.urls;
-
-    urlArray = [];
-
-    for (let url in urlList) {
-        urlArray.push(urlList[url]);
-    }
+    requiredKeyword = clientPreferences.filterPreferences.requiredKeywords.requireAtLeastOneItem[0];
     
-    console.log(urlArray[0]);
+    // Article.find({$or: [{"title": {"$regex": requiredKeyword, "$options":"i"}}, {"description": {"$regex": requiredKeyword, "$options":"i"}}]})
+    Article.find(filtersController.regexCompiler())
+        .sort(filtersController.applyUserSort())
+        .then(result => {
+            res.render("articles.ejs", {title: "Run Test", article: result, pageTitle: "Run Test", lastUpdated: lastUpdated});
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
-    res.send("lol");
 })
 
 
