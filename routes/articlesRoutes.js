@@ -22,9 +22,9 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 
 
 // Makes requests and updates database every 15 minutes
-schedule.scheduleJob("*/15 * * * *", async () => {
+// schedule.scheduleJob("*/15 * * * *", async () => {
 // schedule.scheduleJob("*/30 * * * * *", async () => {
-//  schedule.scheduleJob(requestsController.crontimeParser(), async () => {
+ schedule.scheduleJob(requestsController.crontimeParser(), async () => {
 
     console.log("\nStarted schedule");
 
@@ -43,7 +43,6 @@ schedule.scheduleJob("*/15 * * * *", async () => {
 
 router.get("/", async (req, res) => {
 
-    //TODO Sort/filter has to be done around here
     Article.find(filtersController.applyUserFilters())
         .sort(filtersController.applyUserSort())
         .then(result => {

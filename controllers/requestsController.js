@@ -99,11 +99,19 @@ const crontimeParser = () => {  // Gets the refresh rate from the json file an o
     clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
     timeDurationInMinutes = clientPreferences.refreshRateInMinutes;
 
-    let timeDurationInSeconds = Math.round(timeDurationInMinutes * 60);
+    output = "";
 
-    console.log(`*/${timeDurationInSeconds} * * * * *`);
+    if (timeDurationInMinutes < 1) {
+        let timeDurationInSeconds = Math.round(timeDurationInMinutes * 60);
+        output = `*/${timeDurationInSeconds} * * * * *`;
+    }
+    else {
+        output = `*/${timeDurationInMinutes} * * * *`;
+    }
 
-    return `*/${timeDurationInSeconds} * * * * *`;
+    console.log(output);
+
+    return output;
 }
     
 

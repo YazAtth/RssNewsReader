@@ -1,5 +1,5 @@
 {
-    "refreshRateInMinutes": 15,
+    "refreshRateInMinutes": 1,
 
     "rssSources": [
         {
