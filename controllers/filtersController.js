@@ -53,13 +53,9 @@ const regexCompiler = () => {
     }
 
     for (i=0; i<requireAllItemsBeExcluded.length; i++) {
-        // filterArgumentNegation.push({$or: [{"title": {"$regex": requireAllItems[i], "$options":"i"}}, {"description": {"$regex": requireAllItems[i], "$options":"i"}}]})
         filterArgumentNegation.push({$and: [{"title": {"$not": {"$regex": requireAllItemsBeExcluded[i], "$options":"i"}}}, {"description": {"$not": {"$regex": requireAllItemsBeExcluded[i], "$options":"i"}}}]});
 
     }
-
-    // console.log({$and: filterArgumentAnd});
-    // console.log({$and: filterArgumentNegation});
 
 
     outsideFilterArgument = [];
@@ -80,17 +76,6 @@ const regexCompiler = () => {
     }
 
     filterArgument = {$and: outsideFilterArgument}
-    // filterArgument = {"title": {"$not": {"$regex": "macron", "$options":"i"}}} //! That worked in removing word from the title
-    // filterArgument = {$and: [{"title": {"$not": {"$regex": "macron", "$options":"i"}}}, {"description": {"$not": {"$regex": "macron", "$options":"i"}}}]}
-    // filterArgument = {$and: 
-    //     [
-    //         {$and: [{"title": {"$not": {"$regex": "macron", "$options":"i"}}}, {"description": {"$not": {"$regex": "macron", "$options":"i"}}}]},
-    //         {$and: [{"title": {"$not": {"$regex": "elon", "$options":"i"}}}, {"description": {"$not": {"$regex": "elon", "$options":"i"}}}]}
-    //     ]
-    // }
-
-
-        
 
 
     // console.log(util.inspect(filterArgument, {showHidden: false, depth: null, colors: true}))
