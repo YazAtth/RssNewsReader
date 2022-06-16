@@ -29,9 +29,9 @@
         ],
 
         "requiredKeywords": {
-            "requireAtLeastOneItem": [],
-            "requireAllItems": ["russia","american"],
-            "excludedItems":[]
+            "requireAtLeastOneItem": ["England"],
+            "requireAllItems": [],
+            "excludedItems":["Bank"]
         }
     },
 

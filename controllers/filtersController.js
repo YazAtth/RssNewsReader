@@ -4,20 +4,8 @@ const fs = require("fs");
 
 
 const applyUserFilters = () => {
-    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
-    filterPreferences = clientPreferences.filterPreferences;
-    visibleNewsSourcesList = filterPreferences.showInFeed;
 
-    if (visibleNewsSourcesList.length == 0) { // If the visible news sources in the JSON file aren't populated: returns all of the sources
-        return {}
-    }
-
-
-    filterArgument = [];
-    for (let i=0; i<visibleNewsSourcesList.length; i++) { // Constructs a list of objects eg. {sourceTitle: "The Guardian"} and puts them in a list
-        filterArgument.push({sourceTitle: visibleNewsSourcesList[i]});
-    }
-    filterArgumentFull = {$or: filterArgument}; // "$or" argument tells mongoose .find() function that at least one of the items in the list must be satified for it to show the article
+    filterArgumentFull = {$and: [filterBySource(), regexCompiler()]}; 
 
     return filterArgumentFull; // Returns the argument for the mongoose .find() function
 }
@@ -77,10 +65,26 @@ const regexCompiler = () => {
 
     filterArgument = {$and: outsideFilterArgument}
 
-
     // console.log(util.inspect(filterArgument, {showHidden: false, depth: null, colors: true}))
     return filterArgument;
     
+}
+
+const filterBySource = () => {
+    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+    filterPreferences = clientPreferences.filterPreferences;
+    visibleNewsSourcesList = filterPreferences.showInFeed;
+
+    if (visibleNewsSourcesList.length == 0) { // If the visible news sources in the JSON file aren't populated: returns all of the sources
+        return {}
+    }
+
+    filterArgument = [];
+    for (let i=0; i<visibleNewsSourcesList.length; i++) { // Constructs a list of objects eg. {sourceTitle: "The Guardian"} and puts them in a list
+        filterArgument.push({sourceTitle: visibleNewsSourcesList[i]});
+    }
+    filterArgumentFull = {$or: filterArgument}; // "$or" argument tells mongoose .find() function that at least one of the items in the list must be satified for it to show the article
+    return filterArgumentFull;
 }
 
 
