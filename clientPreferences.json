@@ -1,5 +1,5 @@
 {
-    "refreshRateInMinutes": 1,
+    "refreshRateInMinutes": 15,
 
     "rssSources": [
         {
@@ -29,9 +29,9 @@
         ],
 
         "requiredKeywords": {
-            "requireAtLeastOneItem": ["England"],
+            "requireAtLeastOneItem": [],
             "requireAllItems": [],
-            "excludedItems":["Bank"]
+            "excludedItems":[]
         }
     },
 

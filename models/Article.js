@@ -15,6 +15,7 @@ const ArticleSchema = mongoose.Schema({
     "dc:creator": String,
     itemID: String,
     dbUploadDate: {type: Date, default: Date.now},
+    keywords: [String]
 });
 
 

@@ -26,7 +26,10 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 // schedule.scheduleJob("*/30 * * * * *", async () => {
  schedule.scheduleJob(requestsController.crontimeParser(), async () => {
 
-    console.log("\nStarted schedule");
+    let date_ob = new Date()
+
+    console.log(`\nStarted schedule at ${("00"+date_ob.getHours()).slice(-2)}:${("00"+date_ob.getMinutes()).slice(-2)}`);
+    // console.log(`\nStarted schedule at ${date_ob.getTime()}`);
 
     promiseList = [];
 
