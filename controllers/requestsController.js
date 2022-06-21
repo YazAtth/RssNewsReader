@@ -48,7 +48,7 @@ const saveRssToDatabase = async (url) => {
         
 
         const sameArticleTitleExists = await Article.exists({title: newPostTitle}, {sourceTitle: sourceTitle}); // Checks to see if an article exists in the db with the same title within the same source
-        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}, {sourceTitle, sourceTitle}); // Checks to see if an article exists in the db with the same pubDate within the same source
+        const sameArticleDateExists = await Article.exists({pubDate: newPostDate}, {sourceTitle: sourceTitle}); // Checks to see if an article exists in the db with the same pubDate within the same source
 
         if (sameArticleTitleExists && sameArticleDateExists) { // If an article already exists in the db with the same title and date: marked as duplicated
             // console.log("Duplicate Found");
