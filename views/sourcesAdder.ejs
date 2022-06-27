@@ -1,0 +1,24 @@
+
+<a href="/admin">< Back</a><br><br>
+
+<form action="/admin/sources/add" method="POST">
+
+    <label for="newsSourceTitle">Title</label><br>
+    <input type="text" id="newsSourceTitle" name="newsSourceTitle" required>
+
+    <br>
+
+    <label for="newsSourceUrl">URL</label><br>
+    <input type="text" id="newsSourceUrl" name="newsSourceUrl" required>
+
+    <br>
+
+    <input type="checkbox" id="isVisible" name="isVisible" checked>
+    <label for="isVisible">Is Visible in News Feed (visible by default)</label>
+
+    <br><br>
+
+    <input type="submit" value="Add New Source" />
+
+
+</form>

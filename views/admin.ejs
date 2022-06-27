@@ -1,0 +1,73 @@
+
+<a href="/admin/sources/add">Add a News Source</a><br>
+<a href="/admin/sources/delete">Delete a News Source</a><br><br>
+
+
+
+<form action="/admin" method="POST">
+    <!-- <input type="text" name="mytext" required /> <br> -->
+
+    <label for="refreshRate">Refresh Rate (in minutes)</label> <br>
+    <input type="number" name="refreshRate" value=<%=jsonData.refreshRateInMinutes%> /> <br><br>
+
+    <label for="sortField">Sort Results By</label> <br>
+    <select id="sortField" name="sortField">
+        <option value="pubDate" <% if (jsonData.sortPreferences.sortByField == "pubDate") {%>
+            selected
+            <% } %>
+            >Time of Publishing</option>
+
+        <option value="title" <% if (jsonData.sortPreferences.sortByField == "title") {%>
+            selected
+            <% } %>
+            >News Title</option>
+
+        <option value="sourceTitle" <% if (jsonData.sortPreferences.sortByField == "sourceTitle") {%>
+            selected
+            <% } %>
+            > Source Title</option>
+
+        <option value="dbUploadDate" <% if (jsonData.sortPreferences.sortByField == "dbUploadDate") {%>
+            selected
+            <% } %>
+            >Time of Upload to Database</option>
+    </select>
+
+    <br><br>
+    <label for="sortOrder">Sort in Order of</label> <br>
+    <select id="sortOrder" name="sortOrder">
+        <option value="ascending" <% if (jsonData.sortPreferences.order == "ascending") {%>
+            selected
+            <% } %>
+            >Ascending</option>
+
+        <option value="descending" <% if (jsonData.sortPreferences.order == "descending") {%>
+            selected
+            <% } %>
+            >Descending</option>
+    </select>
+
+    <br><h4>----------------------------------------------</h4>
+
+
+    <label for="visibleFeeds">Visible Feeds</label> <br>
+    <% for (let i=0; i<jsonData.rssSources.length; i++) { %>
+        <input type="checkbox" id="<%=jsonData.rssSources[i].title%>" name="visibleFeeds" value="<%=jsonData.rssSources[i].title%>"
+        <% if (jsonData.rssSources[i].isVisible == true) {%>
+            checked
+        <% } %>
+        >
+        <label for="<%=jsonData.rssSources[i].title%>"> <%=jsonData.rssSources[i].title%></label>
+        <br>
+    <% } %>
+
+
+
+
+
+
+
+
+    <br><br>
+    <input type="submit" value="Submit" />
+</form>
