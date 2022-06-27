@@ -24,6 +24,10 @@ require("dotenv/config")
 const articlesRoute = require("./routes/articlesRoutes");
 app.use("/articles", articlesRoute);
 
+const adminRoute = require("./routes/adminRoutes");
+app.use("/admin", adminRoute);
+
+
 
 app.get("/", (req, res) => {
     res.render("home", {title: "Home", pageTitle: "Home"});

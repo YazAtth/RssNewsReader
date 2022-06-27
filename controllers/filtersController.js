@@ -73,7 +73,16 @@ const regexCompiler = () => {
 const filterBySource = () => {
     clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
     filterPreferences = clientPreferences.filterPreferences;
-    visibleNewsSourcesList = filterPreferences.showInFeed;
+
+    //TODO (DONE): Make it so that instead of being equal to field in json file, is equal to new array made from looking if the "isVisible" field is true for each source.
+    // visibleNewsSourcesList = filterPreferences.showInFeed;
+    visibleNewsSourcesList = [];
+    sourcesList = clientPreferences.rssSources;
+    for (let i=0; i<sourcesList.length; i++) {
+        if (sourcesList[i].isVisible == true) {
+            visibleNewsSourcesList.push(sourcesList[i].title);
+        }
+    }
 
     if (visibleNewsSourcesList.length == 0) { // If the visible news sources in the JSON file aren't populated: returns all of the sources
         return {}

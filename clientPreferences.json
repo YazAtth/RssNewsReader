@@ -1,43 +1,45 @@
 {
-    "refreshRateInMinutes": 1,
-
-    "rssSources": [
-        {
-            "url": "https://www.theguardian.com/international/rss",
-            "title": "The Guardian"
-        }, 
-        {
-            "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-            "title": "The New York Times"
-        }, 
-        {
-            "url": "http://feeds.bbci.co.uk/news/england/london/rss.xml",
-            "title": "BBC"
-        },
-        {
-            "url": "https://feeds.skynews.com/feeds/rss/home.xml",
-            "title": "Sky News"
-        }
-    ],
-
-    "filterPreferences": {
-        "showInFeed": [
-            "The Guardian",
-            "The New York Times",
-            "BBC",
-            "Sky News"
-        ],
-
-        "requiredKeywords": {
-            "requireAtLeastOneItem": [],
-            "requireAllItems": [],
-            "excludedItems":[]
-        }
-    },
-
-    "sortPreferences":
+  "refreshRateInMinutes": "15",
+  "rssSources": [
     {
-        "sortByField": "pubDate",
-        "order": "descending"
+      "url": "https://www.theguardian.com/international/rss",
+      "title": "The Guardian",
+      "isVisible": true
+    },
+    {
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+      "title": "The New York Times",
+      "isVisible": true
+    },
+    {
+      "url": "http://feeds.bbci.co.uk/news/england/london/rss.xml",
+      "title": "BBC",
+      "isVisible": true
+    },
+    {
+      "url": "https://feeds.skynews.com/feeds/rss/home.xml",
+      "title": "Sky News",
+      "isVisible": true
     }
+  ],
+  "filterPreferences": {
+    "showInFeed": [
+      "The Guardian",
+      "The New York Times",
+      "BBC",
+      "Sky News"
+    ],
+    "requiredKeywords": {
+      "requireAtLeastOneItem": [],
+      "requireAllItems": [],
+      "excludedItems": [
+        "ukraine"
+      ]
+    }
+  },
+  "sortPreferences": {
+    "sortByField": "pubDate",
+    "order": "descending"
+  },
+  "sampleFieldToBeModified": 38
 }

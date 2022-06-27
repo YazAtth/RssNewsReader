@@ -31,7 +31,9 @@ const saveRssToDatabase = async (url) => {
 
     // let sourceTitle = dbData[0].title[0];  // Gets the title of the news source
     // let sourceTitle = returnNewsSourceTitle(dbData[0].title[0]);  // Gets the title of the news source
-    let sourceTitle = returnNewsSourceTitleFromUrl(url);
+    //! sourceTitle for articles are sometimes messed up in the console messages but not the database for some reason
+    //! Looking at console messages: sourceTitle for an article is equal to the sourceTitle of the article preceeding it
+    let sourceTitle = await returnNewsSourceTitleFromUrl(url);
     let dbDataBody = dbData[0].item;  // Removes all but the array of news articles
 
     for (let i=0; i<dbDataBody.length; i++) {
@@ -80,18 +82,21 @@ const saveRssToDatabasePromise = async (url) => {
 
 
 const returnNewsSourceTitleFromUrl = inputUrl => {
-    clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
-    jsonRssSourceList = clientPreferences.rssSources; // Returns an array of all the Rss sources
+    return new Promise(function(resolve, reject) {
+        clientPreferences = JSON.parse(fs.readFileSync("clientPreferences.json"));
+        jsonRssSourceList = clientPreferences.rssSources; // Returns an array of all the Rss sources
 
-    let sourceTitle = "Unknown Source"
+        let sourceTitle = "Unknown Source"
 
-    jsonRssSourceList.filter(rssSource => {
-        if (rssSource.url === inputUrl ) {
-            sourceTitle = rssSource.title;
-        }
-    });
+        jsonRssSourceList.filter(rssSource => {
+            if (rssSource.url === inputUrl ) {
+                sourceTitle = rssSource.title;
+            }
+        });
 
-    return sourceTitle;
+        // return sourceTitle;
+        resolve(sourceTitle);
+    })
 
 }
 
