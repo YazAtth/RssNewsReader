@@ -3,39 +3,23 @@ const router = express.Router();
 var bodyParser = require('body-parser'); // Reads from the text box
 const fs = require('fs');
 
+const fileController = require("../controllers/fileController");
 
 router.use(bodyParser.urlencoded({ extended: true })); 
 
 
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
 
+    jsonObj = await fileController.returnClientPreferences();
+    console.log(jsonObj);
 
-    fs.readFile("./clientPreferences.json", "utf-8", (err, data) => {
-        if (err) throw err;
-        obj = JSON.parse(data)
+    res.render("admin", {title: "Admin", pageTitle: "Admin", jsonData:jsonObj})
 
-        // console.log(obj.refreshRateInMinutes);
-
-        if(obj.clientDetails.adminAccess == false) {
-            res.status(403)
-            res.send("Error 403 - Forbidden")
-            // res.send("Forbidden Access");
-        }
-
-        res.render("admin", {title: "Admin", pageTitle: "Admin", jsonData:obj})
-
-    })
-
-
-
-    // let myText = req.body.mytext;
-    // console.log(myText);
-})
+});
 
 
 router.post("/", (req, res) => {
-
 
     // Paths to the clientPreference file
     const fileNameTwoDots = '../clientPreferences.json';
@@ -46,9 +30,6 @@ router.post("/", (req, res) => {
     file.refreshRateInMinutes = req.body.refreshRate;
     file.sortPreferences.sortByField = req.body.sortField;
     file.sortPreferences.order = req.body.sortOrder;
-
-    console.log(req.body);
-    // file.viewPreferences.displaySourceTitle = req.body.displaySourceTitle;
 
     console.log("ran");
     console.log(req.body.visibleFeeds);
@@ -94,14 +75,11 @@ router.post("/", (req, res) => {
 });
 
 
-router.get("/sources/delete", (req, res) => {
+router.get("/sources/delete", async (req, res) => {
+    obj = await fileController.returnClientPreferences();
+    console.log(jsonObj);
 
-    fs.readFile("./clientPreferences.json", "utf-8", (err, data) => {
-        if (err) throw err;
-        obj = JSON.parse(data)
-
-        res.render("sourcesDeleter", {title: "Source Deleter", pageTitle: "Source Deleter", jsonData:obj})
-    });
+    res.render("sourcesDeleter", {title: "Source Deleter", pageTitle: "Source Deleter", jsonData:obj})
 });
 
 
@@ -117,8 +95,6 @@ router.post("/sources/delete", (req, res) => {
 
     newRssSourcesList = [];
 
-    // console.log(req.body);
-
     if (req.body.deleteSource != null) { // Only tries to read the response if it is not null (ie. at least one of the checkboxes are checked)
         for (let i=0; i<file.rssSources.length; i++) {
 
@@ -127,7 +103,6 @@ router.post("/sources/delete", (req, res) => {
                 newRssSourcesList.push(file.rssSources[i]);
             }
         }
-
         file.rssSources = newRssSourcesList;
     }
 
@@ -169,7 +144,7 @@ router.post("/sources/add", (req, res) => {
         isVisibleBool = false;
     }
 
-    console.log(req.body);
+    // console.log(req.body);
 
     newsSourceObj = {
         "url": req.body.newsSourceUrl,

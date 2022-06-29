@@ -118,6 +118,8 @@ const crontimeParser = () => {  // Gets the refresh rate from the json file an o
 
     return output;
 }
+
+
     
 
 
@@ -126,5 +128,5 @@ module.exports = {
     adder,
     saveRssToDatabase,
     saveRssToDatabasePromise,
-    crontimeParser
+    crontimeParser,
 }

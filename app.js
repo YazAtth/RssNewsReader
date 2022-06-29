@@ -5,6 +5,11 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 // Mongoose
 const mongoose = require("mongoose");
+const fs = require("fs");
+
+const fileController = require("./controllers/fileController");
+
+
 
 const PORT = 3001;
 
@@ -17,15 +22,12 @@ require("dotenv/config")
 
 
 
-
-
-
 // ROUTES
 const articlesRoute = require("./routes/articlesRoutes");
 app.use("/articles", articlesRoute);
 
 const adminRoute = require("./routes/adminRoutes");
-app.use("/admin", adminRoute);
+app.use("/admin", fileController.requireAdmin, adminRoute);
 
 
 
