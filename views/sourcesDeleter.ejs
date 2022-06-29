@@ -6,8 +6,8 @@
 
     <label for="deleteSource"><b>Choose the Sources To Be Deleted</b></label> <br>
     <% for (let i=0; i<jsonData.rssSources.length; i++) { %>
-        <input type="checkbox" id="<%=jsonData.rssSources[i].title%>" name="deleteSource" value="<%=jsonData.rssSources[i].title%>">
-        <label for="<%=jsonData.rssSources[i].title%>"> <%=jsonData.rssSources[i].title%></label>
+        <input type="checkbox" id="<%=jsonData.rssSources[i].title%>" name="deleteSource" value="<%=jsonData.rssSources[i].title%>_<%=jsonData.rssSources[i].extraInfo%>">
+        <label for="<%=jsonData.rssSources[i].title%>"> <span class="deleteSourceTitle"><%=jsonData.rssSources[i].title%></span> - <%=jsonData.rssSources[i].extraInfo%></label>
         <br>
     <% } %>
 

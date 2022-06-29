@@ -46,14 +46,20 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 
 router.get("/", async (req, res) => {
 
-    Article.find(filtersController.applyUserFilters())
-        .sort(filtersController.applyUserSort())
-        .then(result => {
-            res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated});
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    fs.readFile("./clientPreferences.json", "utf-8", (err, data) => {
+        if (err) throw err;
+        obj = JSON.parse(data)
+
+        Article.find(filtersController.applyUserFilters())
+            .sort(filtersController.applyUserSort())
+            .then(result => {
+                res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated, jsonData:obj});
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    });
+
 });
 
 // This won't work anymore since we're getting json data from multiple sources, need to create a new way of doing it.

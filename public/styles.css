@@ -138,3 +138,7 @@ nav p, nav a{
 color: #777;
 font-weight: 300;
 }
+
+.deleteSourceTitle {
+    text-decoration: underline;
+}

@@ -60,10 +60,17 @@ const convertMillisecondsToDisplayTime = milliseconds => {
 
 <% article.forEach(eachArticle => { %>
     <h3 class="title"><a href=<%=eachArticle.link%> class="title"><%=eachArticle.title %></a></h3>
-    <p class="sourceTitle">- <%=eachArticle.sourceTitle %> -</p>
+
+    <% if (jsonData.viewPreferences.displaySourceTitle == true) { %>
+        <p class="sourceTitle">- <%=eachArticle.sourceTitle %> -</p>
+    <% } %>
+
     <p class="pubDate"> <span><%- convertMillisecondsToDisplayTime(Date.now() - eachArticle.pubDate) + " ago"%>  <br> <span class="extra"><%=eachArticle.pubDate%></span></span></p>
 
-    <div class="description"><%- eachArticle.description %></div>
+    <% if (jsonData.viewPreferences.displayArticleDescription == true) { %>
+        <div class="description"><%- eachArticle.description %></div>
+    <% } %>
+
 
     <hr class="solidLine">
 <% }) %>

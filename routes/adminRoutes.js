@@ -17,6 +17,12 @@ router.get("/", (req, res) => {
 
         // console.log(obj.refreshRateInMinutes);
 
+        if(obj.clientDetails.adminAccess == false) {
+            res.status(403)
+            res.send("Error 403 - Forbidden")
+            // res.send("Forbidden Access");
+        }
+
         res.render("admin", {title: "Admin", pageTitle: "Admin", jsonData:obj})
 
     })
@@ -41,6 +47,9 @@ router.post("/", (req, res) => {
     file.sortPreferences.sortByField = req.body.sortField;
     file.sortPreferences.order = req.body.sortOrder;
 
+    console.log(req.body);
+    // file.viewPreferences.displaySourceTitle = req.body.displaySourceTitle;
+
     console.log("ran");
     console.log(req.body.visibleFeeds);
 
@@ -52,6 +61,26 @@ router.post("/", (req, res) => {
         else {
             file.rssSources[i].isVisible = false
         }
+    }
+
+
+    // If none of the items are checked, will return "undefined", this makes sure it returns an empty array instead.
+    if (req.body.displayElements == null) {
+        req.body.displayElements = [];
+    }
+
+    // Display Settings...
+    if (req.body.displayElements.includes("displaySourceTitle")) {
+        file.viewPreferences.displaySourceTitle = true;
+    }
+    else {
+        file.viewPreferences.displaySourceTitle = false;
+    }
+
+    if (req.body.displayElements.includes("displayDescription")) {
+        file.viewPreferences.displayArticleDescription = true;
+    } else {
+        file.viewPreferences.displayArticleDescription = false;
     }
 
     // Writes to the JSON file
@@ -88,18 +117,20 @@ router.post("/sources/delete", (req, res) => {
 
     newRssSourcesList = [];
 
-    console.log(req.body);
+    // console.log(req.body);
 
     if (req.body.deleteSource != null) { // Only tries to read the response if it is not null (ie. at least one of the checkboxes are checked)
         for (let i=0; i<file.rssSources.length; i++) {
 
-            if (!req.body.deleteSource.includes(file.rssSources[i].title)) {
+            // Checks to see if the response doesn't contain a source with the same "title" and "extra" info and then adds it to the list "newRssSourcesList"
+            if (!req.body.deleteSource.includes(`${file.rssSources[i].title}_${file.rssSources[i].extraInfo}`)) {
                 newRssSourcesList.push(file.rssSources[i]);
             }
         }
 
         file.rssSources = newRssSourcesList;
     }
+
 
 
     // Writes to the JSON file
@@ -138,9 +169,12 @@ router.post("/sources/add", (req, res) => {
         isVisibleBool = false;
     }
 
+    console.log(req.body);
+
     newsSourceObj = {
         "url": req.body.newsSourceUrl,
         "title": req.body.newsSourceTitle,
+        "extraInfo": req.body.newsSourceExtraInfo,
         "isVisible": isVisibleBool
     }
 

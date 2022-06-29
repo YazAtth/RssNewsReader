@@ -61,8 +61,24 @@
         <br>
     <% } %>
 
+    <br><h4>----------------------------------------------</h4>
 
 
+   <label for="displayElements">Choose Display Preferences</label> <br>
+
+   <input type="checkbox" id="displaySourceTitle" name="displayElements" value="displaySourceTitle"
+   <% if (jsonData.viewPreferences.displaySourceTitle == true) { %>
+    checked
+   <% } %>
+   >
+   <label for="displaySourceTitle">Display Source Title</label>
+   <br>
+   <input type="checkbox" id="displayDescription" name="displayElements" value="displayDescription"
+   <% if (jsonData.viewPreferences.displayArticleDescription == true) { %>
+    checked
+   <% } %>
+   >
+   <label for="displayDescription">Display Article Description</label>
 
 
 
