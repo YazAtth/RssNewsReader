@@ -5,7 +5,6 @@ const app = express();
 const expressLayouts = require("express-ejs-layouts");
 // Mongoose
 const mongoose = require("mongoose");
-const fs = require("fs");
 
 const fileController = require("./controllers/fileController");
 
@@ -20,8 +19,6 @@ app.use(expressLayouts);
 require("dotenv/config")
 
 
-
-
 // ROUTES
 const articlesRoute = require("./routes/articlesRoutes");
 app.use("/articles", articlesRoute);
@@ -31,8 +28,10 @@ app.use("/admin", fileController.requireAdmin, adminRoute);
 
 
 
-app.get("/", (req, res) => {
-    res.render("home", {title: "Home", pageTitle: "Home"});
+app.get("/", async (req, res) => {
+    obj = await fileController.returnClientPreferences();
+
+    res.render("home", {title: "Home", pageTitle: "Home", jsonData: obj});
 })
 
 

@@ -8,6 +8,8 @@ const { exit } = require("process");  // Temporary for debugging
 
 const filtersController = require("../controllers/filtersController");
 const requestsController = require("../controllers/requestsController");
+const fileController = require("../controllers/fileController");
+
 const Article = require("../models/Article"); // Import schema for each Article for the db
 
 // Takes the URLs from the JSON file and turns them into an array
@@ -46,19 +48,16 @@ lastUpdated = undefined;  // Displayed to the user to show when the news feed wa
 
 router.get("/", async (req, res) => {
 
-    fs.readFile("./clientPreferences.json", "utf-8", (err, data) => {
-        if (err) throw err;
-        obj = JSON.parse(data)
+    obj = await fileController.returnClientPreferences();
 
-        Article.find(filtersController.applyUserFilters())
-            .sort(filtersController.applyUserSort())
-            .then(result => {
-                res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated, jsonData:obj});
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    });
+    Article.find(filtersController.applyUserFilters())
+        .sort(filtersController.applyUserSort())
+        .then(result => {
+            res.render("articles.ejs", {title: "All Articles", article: result, pageTitle: "Articles", lastUpdated: lastUpdated, jsonData:obj});
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
 });
 

@@ -12,11 +12,12 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get("/", async (req, res) => {
 
     jsonObj = await fileController.returnClientPreferences();
-    console.log(jsonObj);
+    // console.log(jsonObj);
 
     res.render("admin", {title: "Admin", pageTitle: "Admin", jsonData:jsonObj})
 
 });
+
 
 
 router.post("/", (req, res) => {

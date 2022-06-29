@@ -1,7 +1,7 @@
 {
   "clientDetails": {
     "clientKey": "abc123",
-    "adminAccess": true
+    "adminAccess": false
   },
   "refreshRateInMinutes": "15",
   "rssSources": [
