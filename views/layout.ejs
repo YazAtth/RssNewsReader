@@ -15,12 +15,20 @@
         </div>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/titles">Titles</a></li>
-            <li><a href="/articles">Articles</a></li>
+
+            <% if (jsonData.clientDetails.userKey != "default") { %>
+                <li><a href="/articles">Articles</a></li>
+            <% } %>
             <li><a href="/documentation">Documentation</a></li>
             <% if (jsonData.clientDetails.adminAccess == true) { %>
-                <li><a href="/admin">Admin</a></li>
+                <li><a href="/admin"><b>Admin</b></a></li>
             <% } %>
+            <% if (jsonData.clientDetails.userKey == "default") { %>
+                <li><a href="/login"><b>Login</b></a></li>
+            <% } else { %>
+                <li><a href="/login"><div><b>Change User</b></div></a></li>
+            <% } %>
+                
         </ul>
     </nav>
 

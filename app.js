@@ -26,6 +26,9 @@ app.use("/articles", articlesRoute);
 const adminRoute = require("./routes/adminRoutes");
 app.use("/admin", fileController.requireAdmin, adminRoute);
 
+const loginRoute = require("./routes/loginRoutes");
+app.use("/login", loginRoute);
+
 
 
 app.get("/", async (req, res) => {

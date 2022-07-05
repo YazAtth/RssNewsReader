@@ -139,6 +139,11 @@ color: #777;
 font-weight: 300;
 }
 
+nav a div {
+    white-space: nowrap;
+}
+
+
 .deleteSourceTitle {
     text-decoration: underline;
 }

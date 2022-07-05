@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-var bodyParser = require('body-parser'); // Reads from the text box
+var bodyParser = require('body-parser'); // Reads from the text box, need it for requests with express
 const fs = require('fs');
 
 const fileController = require("../controllers/fileController");
 
-router.use(bodyParser.urlencoded({ extended: true })); 
+router.use(bodyParser.urlencoded({ extended: true })); // Reads from the text box, need it for requests with express
 
 
 
@@ -167,6 +167,10 @@ router.post("/sources/add", (req, res) => {
 
     res.redirect("/admin")
 });
+
+router.get("/users/add", (req, res) => {
+    res.send("hi");
+})
 
 
 module.exports = router;
