@@ -1,0 +1,57 @@
+{
+    "clientDetails": {
+      "userKey": "def456",
+      "adminAccess": false
+    },
+    "refreshRateInMinutes": "15",
+    "rssSources": [
+      {
+        "url": "https://www.theguardian.com/international/rss",
+        "title": "The Guardian",
+        "extraInfo": "International",
+        "isVisible": true
+      },
+      {
+        "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+        "title": "The New York Times",
+        "extraInfo": "Home Page",
+        "isVisible": true
+      },
+      {
+        "url": "http://feeds.bbci.co.uk/news/england/london/rss.xml",
+        "title": "BBC",
+        "extraInfo": "London",
+        "isVisible": true
+      },
+      {
+        "url": "https://feeds.skynews.com/feeds/rss/home.xml",
+        "title": "Sky News",
+        "extraInfo": "Home",
+        "isVisible": true
+      }
+    ],
+    "filterPreferences": {
+      "showInFeed": [
+        "The Guardian",
+        "The New York Times",
+        "BBC",
+        "Sky News"
+      ],
+      "requiredKeywords": {
+        "requireAtLeastOneItem": [],
+        "requireAllItems": [],
+        "excludedItems": [
+          "ukraine"
+        ]
+      }
+    },
+    "sortPreferences": {
+      "sortByField": "pubDate",
+      "order": "descending"
+    },
+    "sampleFieldToBeModified": 38,
+    "viewPreferences": {
+      "displaySourceTitle": true,
+      "displayArticleDescription": true
+    }
+  }
