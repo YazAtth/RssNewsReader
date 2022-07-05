@@ -1,8 +1,8 @@
 {
   "clientDetails": {
-    "userName": "sampleClient1",
-    "userKey": "abc123",
-    "adminAccess": true
+    "userName": "sampleClient3",
+    "userKey": "password",
+    "adminAccess": false
   },
   "refreshRateInMinutes": "15",
   "rssSources": [
@@ -41,16 +41,13 @@
     "requiredKeywords": {
       "requireAtLeastOneItem": [],
       "requireAllItems": [],
-      "excludedItems": [
-        "ukraine"
-      ]
+      "excludedItems": []
     }
   },
   "sortPreferences": {
     "sortByField": "pubDate",
     "order": "descending"
   },
-  "sampleFieldToBeModified": 38,
   "viewPreferences": {
     "displaySourceTitle": true,
     "displayArticleDescription": true

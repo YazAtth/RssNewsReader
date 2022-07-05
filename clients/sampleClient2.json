@@ -1,5 +1,6 @@
 {
     "clientDetails": {
+      "userName": "sampleClient2",
       "userKey": "def456",
       "adminAccess": false
     },

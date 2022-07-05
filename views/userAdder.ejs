@@ -1,0 +1,21 @@
+
+<a href="/admin">< Back</a><br><br>
+
+<form action="/admin/users/add" method="POST">
+
+    <label for="userName">User Name</label><br>
+    <input type="text" id="userName" name="userName" required>
+
+    <br><br>
+
+    <label for="userKey">User Key</label><br>
+    <input type="text" id="userKey" name="userKey" required>
+
+    <br><br>
+
+    <input type="checkbox" id="isAdmin" name="isAdmin">
+    <label for="isAdmin">Admin Access</label>
+
+    <br><br>
+    <input type="submit" value="Add New User" />
+</form>

@@ -168,9 +168,100 @@ router.post("/sources/add", (req, res) => {
     res.redirect("/admin")
 });
 
-router.get("/users/add", (req, res) => {
-    res.send("hi");
+router.get("/users/add", async (req, res) => {
+
+    jsonObj = await fileController.returnClientPreferences();
+
+    res.render("userAdder", {title: "Add User", pageTitle: "Add User", jsonData:obj})
 })
 
+router.post("/users/add", (req, res) => {
+
+    // console.log(req.body);
+
+    adminAccessBool = false;
+    if (req.body.isAdmin == "on") {
+        adminAccessBool = true;
+    }
+
+    newObj = {
+        "clientDetails": {
+            "userName": req.body.userName,
+            "userKey": req.body.userKey,
+            "adminAccess": adminAccessBool
+        },
+        "refreshRateInMinutes": "15",
+        "rssSources": [
+            {
+            "url": "https://www.theguardian.com/international/rss",
+            "title": "The Guardian",
+            "extraInfo": "International",
+            "isVisible": true
+            },
+            {
+            "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+            "title": "The New York Times",
+            "extraInfo": "Home Page",
+            "isVisible": true
+            },
+            {
+            "url": "http://feeds.bbci.co.uk/news/england/london/rss.xml",
+            "title": "BBC",
+            "extraInfo": "London",
+            "isVisible": true
+            },
+            {
+            "url": "https://feeds.skynews.com/feeds/rss/home.xml",
+            "title": "Sky News",
+            "extraInfo": "Home",
+            "isVisible": true
+            }
+        ],
+        "filterPreferences": {
+            "showInFeed": [
+            "The Guardian",
+            "The New York Times",
+            "BBC",
+            "Sky News"
+            ],
+            "requiredKeywords": {
+            "requireAtLeastOneItem": [],
+            "requireAllItems": [],
+            "excludedItems": []
+            }
+        },
+        "sortPreferences": {
+            "sortByField": "pubDate",
+            "order": "descending"
+        },
+        "viewPreferences": {
+            "displaySourceTitle": true,
+            "displayArticleDescription": true
+        }
+    }
+
+    path = `./clients/${req.body.userName}.json`
+    
+    // Stops if the user exists (ie. the file name exists)
+    fs.access(path, fs.F_OK, (err) => {
+        if (!err) { 
+            console.log("File exists"); 
+        } 
+        else {
+            console.log("File doesn't exist");
+
+            fs.writeFile(path, JSON.stringify(newObj, null, 2), (err) => { // For some reason the first parameter takes one dot before the filename but the "require()" at the top needs 2 dots
+                if (err) return console.log(err);
+            });
+
+    
+        }
+    });
+
+    console.log(newObj);
+
+    res.redirect("/admin/users/add");
+
+})
 
 module.exports = router;

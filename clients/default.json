@@ -1,5 +1,6 @@
 {
     "clientDetails": {
+      "userName":"default",
       "userKey": "default",
       "adminAccess": false
     },
